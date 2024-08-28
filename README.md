@@ -44,6 +44,18 @@ Via console command:
 ```
 docker exec -it payment-app ./bin/console app:process-payment aci 100 EUR 4242424242424242 'John Doe' 2027 12 123
 ```
+
+Result:
+```
+Payment Processed Successfully
+==============================
+
+ ---------------------------------- -------- ---------- ------------------------------ ---------- --------- 
+  Transaction Id                     Amount   Currency   Created Date                   Card BIN   Gateway  
+ ---------------------------------- -------- ---------- ------------------------------ ---------- --------- 
+  8ac7a4a09196f1aa01919950643b2dd9   100      EUR        2024-08-28 14:07:48.294+0000   424242     aci      
+ ---------------------------------- -------- ---------- ------------------------------ ---------- --------- 
+```
 Via curl:
 ```
 curl --location 'http://localhost/api/payments/aci' \
@@ -58,4 +70,16 @@ curl --location 'http://localhost/api/payments/aci' \
     "cardHolder": "John Doe",
     "cvv": "123"
 }'
+```
+
+Response:
+```
+{
+    "transactionId": "8ac7a4a09196f1aa0191993015372856",
+    "amount": 100,
+    "currency": "EUR",
+    "created": "2024-08-28 13:32:30.913+0000",
+    "cardBin": 424242,
+    "gateway": "aci"
+}
 ```
