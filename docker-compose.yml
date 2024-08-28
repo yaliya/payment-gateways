@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: payment-app
+    build:
+      context: ./
+      dockerfile: ./docker/app/Dockerfile
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html/
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - backend
+  nginx:
+    image: nginx:alpine
+    container_name: payment-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '80:80'
+      - '8000:80'
+      - '8443:443'
+    volumes:
+      - ./:/var/www/html
+      - ./docker/conf/nginx:/etc/nginx/conf.d
+    networks:
+      - backend
+networks:
+  backend:
+volumes:
+  db-data:

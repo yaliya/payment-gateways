@@ -22,3 +22,31 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    aci.payment_processor:
+        class: App\Service\Gateways\ACI\PaymentProcessor
+        arguments:
+            $client: '@aci.client'
+
+    shift4.payment_processor:
+        class: App\Service\Gateways\Shift4\PaymentProcessor
+        arguments:
+            $client: '@shift4.client'
+
+    App\Service\Gateways\Shift4\PaymentGateway:
+        tags:
+            - { name: 'payment_gateway', alias: 'shift4' }
+        arguments:
+            $processor: '@shift4.payment_processor'
+
+    App\Service\Gateways\ACI\PaymentGateway:
+        tags:
+            - { name: 'payment_gateway', alias: 'aci' }
+        arguments:
+            $processor: '@aci.payment_processor'
+
+    App\Service\PaymentGatewayResolver:
+        public: true
+        arguments:
+            $locator: !service_locator
+                aci: '@App\Service\Gateways\ACI\PaymentGateway'
+                shift4: '@App\Service\Gateways\Shift4\PaymentGateway'

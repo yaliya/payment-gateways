@@ -8,6 +8,14 @@ framework:
 
     #esi: true
     #fragments: true
+    http_client:
+        scoped_clients:
+            shift4.client:
+                base_uri: 'https://api.shift4.com'
+                auth_basic: '%env(SHIFT4_SECRET_KEY)%:'
+            aci.client:
+                base_uri: 'https://eu-test.oppwa.com'
+                auth_bearer: '%env(ACI_BEARER_TOKEN)%'
 
 when@test:
     framework:
