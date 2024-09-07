@@ -11,9 +11,4 @@ abstract class AbstractPaymentGateway implements PaymentGatewayInterface
     public function __construct(
         protected PaymentProcessorInterface $processor
     ) {}
-
-    public function charge(ProcessPaymentRequest $paymentRequest): PaymentProcessorInterface
-    {
-        return $this->processor->authorize($paymentRequest)->capture();
-    }
 }
