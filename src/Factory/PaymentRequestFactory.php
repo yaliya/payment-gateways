@@ -7,9 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 
-final class PaymentRequestFactory
+final readonly class PaymentRequestFactory
 {
-    public function __construct(protected ProcessPaymentRequest $request)
+    public function __construct(private ProcessPaymentRequest $request)
     {}
 
     private function createFromRequest(Request $input): void
